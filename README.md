@@ -124,11 +124,24 @@ Isso irá iniciar:
 
 O sistema deverá suportar os seguintes fluxos principais:
 
-1. **Criação de utilizador**
-2. **Criação de publicação**
-3. **Comentário numa publicação**
-4. **Visualização do feed de publicações**
-5. **Receção de notificações**
-6. **Utilização de cache para melhorar desempenho**
+1. **Criar utilizador**
+2. **Criar publicação**
+3. **Dar like ou comentar numa publicação**
+4. **Gerar feed temporal de publicações**
+5. **Consultar notificações**
 
 Esses fluxos permitem demonstrar o uso combinado das três bases de dados.
+
+### Mapeamento dos fluxos para as tecnologias
+
+Cada fluxo utiliza a base de dados mais adequada ao tipo de operação.
+
+- **Criar utilizador → MongoDB**
+
+- **Criar publicação → MongoDB**
+
+- **Feed temporal → Cassandra**
+
+- **Notificações → Cassandra + Redis**
+
+- **Cache de perfil e feed → Redis**
