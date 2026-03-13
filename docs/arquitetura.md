@@ -149,18 +149,36 @@ Durante os testes do projeto, serão analisados os seguintes aspetos:
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐
-│                       MINI SOCIAL BDT                       │
-│        MongoDB + Cassandra + Redis em arquitetura NoSQL     │
+│ MINI SOCIAL BDT                                             │
+│ Projeto NoSQL com MongoDB + Cassandra + Redis               │
 └──────────────────────────────────────────────────────────────┘
 
-[Utilizador]
-   │
-   ├── cria posts / comenta / dá like ─────→ MongoDB
-   ├── consulta feed ───────────────────────→ Cassandra
-   ├── consulta perfil ─────────────────────→ MongoDB
-   └── acede a dados recentes ──────────────→ Redis
+[USER]
+  │
+  ├── cria post ─────────────→ [MongoDB]
+  │                            users / posts / comments
+  │
+  ├── abre feed ─────────────→ [Cassandra]
+  │                            feed_by_user
+  │
+  ├── recebe notificações ───→ [Cassandra]
+  │                            notifications_by_user
+  │
+  └── consulta perfil/feed ──→ [Redis]
+                               cache_profile / cache_feed
 
-MongoDB   = dados principais
-Cassandra = feed e notificações
+┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│ MongoDB          │  │ Cassandra        │  │ Redis            │
+│ dados principais │  │ queries rápidas  │  │ cache / TTL      │
+│ users            │  │ feed_by_user     │  │ profile cache    │
+│ posts            │  │ notifications    │  │ feed cache       │
+│ comments         │  │ followers        │  │ notif cache      │
+└──────────────────┘  └──────────────────┘  └──────────────────┘
+
+Testes:
+- latência
+- throughput
+- cache hit/miss
+- resultados das queries
 Redis     = cache e baixa latência
 ```
