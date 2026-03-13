@@ -110,7 +110,7 @@ cd mini-social-bdt
 3. Subir os serviços
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 Isso irá iniciar:
