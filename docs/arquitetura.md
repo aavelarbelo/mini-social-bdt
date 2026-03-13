@@ -149,8 +149,8 @@ Durante os testes do projeto, serão analisados os seguintes aspetos:
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐
-│ MINI SOCIAL BDT                                             │
-│ Projeto NoSQL com MongoDB + Cassandra + Redis               │
+│ MINI SOCIAL BDT                                              │
+│ Projeto NoSQL com MongoDB + Cassandra + Redis                │
 └──────────────────────────────────────────────────────────────┘
 
 [USER]
