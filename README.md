@@ -31,13 +31,7 @@ Assim é possível melhorar desempenho, escalabilidade e organização dos dados
 A arquitetura divide as responsabilidades entre três sistemas de armazenamento.
 
 ```text
-Utilizador
-   │
-   ├── cria posts / comentários ───────→ MongoDB
-   │
-   ├── consulta feed ──────────────────→ Cassandra
-   │
-   └── dados recentes / cache ─────────→ Redis
+
 ```
 
 Cada base de dados é usada de acordo com o seu modelo e vantagens.
