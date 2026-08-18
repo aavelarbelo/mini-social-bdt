@@ -1,147 +1,194 @@
-# Mini Rede Social com MongoDB, Cassandra e Redis
+# Mini Social Network with MongoDB, Cassandra and Redis
 
-Este projeto simula uma **mini rede social** utilizando três tecnologias NoSQL diferentes.  
-O objetivo é demonstrar como cada base de dados pode ser usada de acordo com o seu ponto forte.
+This project simulates a **mini social network** using three different NoSQL technologies.  
+The goal is to demonstrate how each database can be used according to its strengths.
 
-O sistema inclui funcionalidades básicas como:
-- criação de utilizadores
-- publicações
-- comentários
-- feed de publicações
-- notificações
+> 🚧 **Status:** in development. The data modelling and the scripts for the three
+> databases (schema, seed and queries for Cassandra, MongoDB and Redis) are
+> implemented and documented, and the environment runs via Docker Compose. The
+> application/API layer and the complete flows are in progress.
 
----
-
-## Objetivo
-
-O objetivo do projeto é construir uma arquitetura distribuída utilizando diferentes bases de dados NoSQL para resolver problemas específicos.
-
-Cada tecnologia é utilizada para um tipo de necessidade:
-
-- **MongoDB** para dados principais da aplicação
-- **Cassandra** para consultas rápidas e feed de utilizadores
-- **Redis** para cache e dados temporários
-
-Assim é possível melhorar desempenho, escalabilidade e organização dos dados.
+The system covers features such as:
+- user creation
+- posts
+- comments
+- post feed
+- notifications
 
 ---
 
-## Arquitetura de dados
+## Objective
 
-A arquitetura divide as responsabilidades entre três sistemas de armazenamento.
+The goal of the project is to build a distributed architecture using different NoSQL databases to solve specific problems.
+
+Each technology is used for a particular need:
+- **MongoDB** for the application's core data
+- **Cassandra** for fast queries and user feeds
+- **Redis** for caching and temporary data
+
+This makes it possible to improve performance, scalability and data organization.
+
+---
+
+## Data architecture
+
+The architecture splits responsibilities across three storage systems.
 
 ```text
-Utilizador
+User
    │
-   ├── cria posts / comentários ───────→ MongoDB
+   ├── creates posts / comments ───────→ MongoDB
    │
-   ├── consulta feed ──────────────────→ Cassandra
+   ├── queries feed ───────────────────→ Cassandra
    │
-   └── dados recentes / cache ─────────→ Redis
+   └── recent data / cache ────────────→ Redis
 ```
 
-Cada base de dados é usada de acordo com o seu modelo e vantagens.
+Each database is used according to its model and advantages.
 
 ---
 
-## Tecnologias e respetivo papel
+## Technologies and their roles
 
 ### MongoDB
-Responsável pelos **dados principais da aplicação**.
+Responsible for the **application's core data**.
 
-Usado para:
-- utilizadores
-- publicações
-- comentários
+Used for:
+- users
+- posts
+- comments
 - likes
 
-Motivo:
-- modelo baseado em documentos
-- estrutura flexível
-- fácil representação de entidades sociais
+Reason:
+- document-based model
+- flexible structure
+- easy representation of social entities
 
 ### Cassandra
-Responsável pelo **feed e notificações dos utilizadores**.
+Responsible for the **user feed and notifications**.
 
-Usado para:
-- feed de publicações por utilizador
-- notificações
-- relações entre utilizadores (seguidores)
+Used for:
+- per-user post feed
+- notifications
+- relationships between users (followers)
 
-Motivo:
-- alta escalabilidade
-- excelente desempenho em consultas previsíveis
-- modelo orientado à query
+Reason:
+- high scalability
+- excellent performance on predictable queries
+- query-oriented model
 
 ### Redis
-Responsável pelo **cache e redução de latência**.
+Responsible for **caching and latency reduction**.
 
-Usado para:
-- cache de perfil
-- cache do feed recente
-- notificações recentes
-- contadores temporários
+Used for:
+- profile cache
+- recent feed cache
+- recent notifications
+- temporary counters
 
-Motivo:
-- acesso extremamente rápido em memória
-- suporte a TTL
-- ideal para dados temporários
+Reason:
+- extremely fast in-memory access
+- TTL support
+- ideal for temporary data
 
 ---
 
-## Como executar
+## How to run
 
-Para executar o ambiente do projeto será utilizado **Docker Compose**.
+The project environment runs with **Docker Compose**.
 
-Passos básicos:
+Basic steps:
 
-1. Clonar o repositório
-
+1. Clone the repository
 ```bash
 git clone <repo-url>
 ```
 
-2. Entrar na pasta do projeto
-
+2. Enter the project folder
 ```bash
 cd mini-social-bdt
 ```
 
-3. Subir os serviços
-
+3. Start the services
 ```bash
 docker compose up
 ```
 
-Isso irá iniciar:
+This will start:
 - MongoDB
 - Cassandra
 - Redis
 
 ---
 
-## Fluxos obrigatórios
+## Core flows
 
-O sistema deverá suportar os seguintes fluxos principais:
+The system is intended to support the following main flows:
 
-1. **Criar utilizador**
-2. **Criar publicação**
-3. **Dar like ou comentar numa publicação**
-4. **Gerar feed temporal de publicações**
-5. **Consultar notificações**
+1. **Create user**
+2. **Create post**
+3. **Like or comment on a post**
+4. **Generate a time-based post feed**
+5. **Check notifications**
 
-Esses fluxos permitem demonstrar o uso combinado das três bases de dados.
+These flows demonstrate the combined use of the three databases.
 
-### Mapeamento dos fluxos para as tecnologias
+### Mapping flows to technologies
 
-Cada fluxo utiliza a base de dados mais adequada ao tipo de operação.
+Each flow uses the database best suited to the type of operation.
 
-- **Criar utilizador → MongoDB**
+- **Create user → MongoDB**
+- **Create post → MongoDB**
+- **Time-based feed → Cassandra**
+- **Notifications → Cassandra + Redis**
+- **Profile and feed cache → Redis**
 
-- **Criar publicação → MongoDB**
+---
 
-- **Feed temporal → Cassandra**
+## Current status
 
-- **Notificações → Cassandra + Redis**
+- ✅ Modelling of the three databases, documented in `docs/`
+- ✅ Schema, seed and query scripts (Cassandra `.cql`, MongoDB `.js`, Redis)
+- ✅ Local orchestration with Docker Compose
+- 🔄 Application/API layer and complete flows — in development
 
-- **Cache de perfil e feed → Redis**
+---
+
+## 🌱 Next Evolution — a Data-Transition Community Platform (Planned)
+
+This polyglot prototype (Cassandra + MongoDB + Redis, orchestrated with Docker
+Compose) is the technical foundation for a larger idea.
+
+**Context.** Moving into data from another field is a journey with great
+potential and little structured guidance. Whatever the background — engineering,
+management, healthcare, humanities — prior experience can accelerate the
+transition when it is well channeled, rather than treated as something to leave
+behind. This next evolution turns that observation into a product: a social
+platform focused on people transitioning into a data career, where each
+person's path becomes shared learning.
+
+**Planned architecture** (reusing this prototype as the data layer):
+- **MongoDB** — user profiles, posts and "learning journeys" (flexible documents).
+- **Cassandra** — activity feeds/timelines (write-heavy, partitioned by user).
+- **Redis** — sessions, caching and real-time counters (likes, notifications).
+- **Backend API** — Python (FastAPI), containerized with Docker.
+- **Local orchestration** — Docker Compose (already present in this repo).
+- **Evolution** — cloud deployment (AWS) and CI/CD, areas I'm currently developing.
+
+**Data & analytics layer** (my focus): anonymized engagement and learning-path
+metrics, to understand what actually helps someone make the transition.
+
+**Roadmap (planned):**
+- [ ] Model social entities on top of the existing polyglot base
+- [ ] Minimal API (authentication, profiles, posts, feed)
+- [ ] Real-time counters and caching with Redis
+- [ ] Community metrics dashboard
+- [ ] Cloud deployment + CI/CD
+
+**Principles:** honesty (sharing the real journey, mistakes included), community
+(built with and for people in transition), continuous evolution (deepening and
+citing the knowledge gained during the postgraduate), and focus on those in
+transition.
+
+> 🚧 Long-term direction, currently in conception. A separate project, developed
+> incrementally.
